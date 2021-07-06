@@ -2,6 +2,8 @@
 
 // load modules
 const express = require('express');
+// resource sharing
+var cors = require('cors');
 const morgan = require('morgan');
 const sequelize = require('./models').sequelize; // import Sequelize
 const userRoutes = require("./routes/userRoutes");
@@ -9,6 +11,8 @@ const courseRoute = require("./routes/courseRoute");
 const intro = require("./routes/intro");
 const User = require("./models").User;
 const Course = require("./models").Course;
+
+
 
 // variable to enable global error logging
 const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
@@ -20,7 +24,10 @@ const app = express();
 app.use(morgan('dev'));
 
 //middleware
-app.use(express.json())
+app.use(express.json());
+
+//sharing
+app.use(cors());
 
 // Add routes.
 app.use("/", intro);
