@@ -10,14 +10,14 @@ export default class Courses extends Component{
     componentDidMount(){
         this.courses();
     }
-
-    render(){
+    // mapping all elments in the array, finally last element add the course create
+    render() {
 
         return(
             <div className="wrap main--grid">
                 {this.state.courses.map(course => {
                     return (
-                        <a className="course--module course--link" key={course.id} href={`courses/${course.id}`}>
+                        <a className="course--module course--link" key={course.id} href={`course/${course.id}`}>
                             <h2 className="course--label">Course</h2>
                             <h3 className="course--title">{course.title}</h3>
                         </a>  
@@ -35,7 +35,7 @@ export default class Courses extends Component{
     }
 
     courses = () => {
-        // use the prop to get the courses
+        // use the prop in context to get to data where the courses api is
         this.props.context.data.getCourses()
         .then((data) => {
             this.setState({courses: data})  

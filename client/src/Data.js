@@ -70,7 +70,7 @@ export default class Data{
             throw new Error();
         }
     }
-    // unprotected route that gets a courses 
+    // unprotected route that gets a course 
     async getCourse(courseId){
         const response = await this.api(`/courses/${courseId}`, 'GET');
         if (response.status === 200) {
