@@ -1,24 +1,35 @@
 
-import React from 'react';
-import axios from 'axios';
+import './App.css';
+import React, {Component} from 'react';
+import { BrowserRouter, Route, Switch} from 'react-router-dom';
 
-class App extends React.Component {
+// import components
+import Courses from './components/courses';
+
+//imports context
+import withContext from "./Context";
+
+
+const CoursesWithContext = withContext(Courses);
+
+
+class App extends Component {
   
-  componentDidMount() {
-    axios.get("http://localhost:5000/api/courses")
-    .then((response) => {
-      console.log(response);
-      let data = response.data;
-      console.log(data);
-    })
-    .catch(error => {
-      console.log("Error fetching and parsing data", error);
-    });
-  }
-
   render() {
-    return <h1>my Component has Mounted, Check the browser 'console' </h1>;
+    return (
+      
+        <BrowserRouter>
+          <div>
+
+            <Switch>
+              <Route exact path='/' component={CoursesWithContext} />
+            </Switch>
+          </div>
+        </BrowserRouter>
+      
+    );
   }
 }
+
 
 export default App;
