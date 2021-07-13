@@ -5,7 +5,7 @@ const NotFound = () =>
     (
         <div className="wrap">
                 <h2>Not Found</h2>
-                <p>Sorry! We couldn't find the page you're looking for.</p>
+                <p>Sorry! The page you are looking for doe snot exits or is not available.</p>
             </div>
     );
 

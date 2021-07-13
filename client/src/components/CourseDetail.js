@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import ReactMarkdown from 'react-markdown'
 export default class CourseDetail extends Component {
 
@@ -7,37 +7,34 @@ export default class CourseDetail extends Component {
         user:{}
     }
     
-    componentDidMount(){
+    componentDidMount() {
         this.course();
     }
 
-    CourseOptions = (authUser, userId, courseId) => {
-        if(authUser.id === userId){
+    CourseOptions = (courseId) => {
+        
             return(
                 <div>
-                     <a className="button" href={`/courses/${courseId}/update`}>Update Course</a>
+                    <a className="button" href={`/course/${courseId}/update`}>Update Course</a>
                     <button className="button" onClick={this.delete}>Delete Course</button>
                     <a className="button button-secondary" href="/">Return to List</a>
                 </div>
-            )
-        }
-        else{
-            return(<a className="button button-secondary" href="/">Return to List</a>);
-        }
+            );
+       
     }
  
  // get courses using context
 course = () => {
-   console.log(this.props.match.params.id);
     this.props.context.data.getCourse(this.props.match.params.id)
     .then((data) => {
+        //console.log(data)
        //extract data from object 
         this.setState({course: data, user: data.User});
                
     })
     .catch(err =>
         {
-            console.log(err);
+
             this.props.history.push('/notfound');
         }
         );
@@ -45,13 +42,13 @@ course = () => {
 //deletes a course
 delete = () => {
     //confirm deletion
-   if(window.confirm("Are you sure you want to delete this course?"))
+   if ( window.confirm("Are you sure you want to delete this course?" ))
    {
        //verify user can delete data
        const {context} = this.props;
        const authUser = context.authenticatedUser;
        const id = this.props.match.params.id;
-        if(authUser){
+        if ( authUser ) {
             context.data.deleteCourse(id, authUser.emailAddress, authUser.password)
             .then(() => {
             
@@ -62,7 +59,7 @@ delete = () => {
             this.props.history.push('/error');
             });
         }
-        else{
+        else {
             this.props.history.push('/forbidden');
         }
    }
@@ -76,21 +73,20 @@ delete = () => {
         //getting data from context
         const { context } = this.props;
         const authUser = context.authenticatedUser;
-
         //place holder text
        let estimatedTime = "To be determine";
-        if (data.estimatedTime){
+        if (data.estimatedTime) {
             estimatedTime = data.estimatedTime;
         }
 
-        // if exists use data if not place holder
+        // if logging show course update and delete
         return(
             <main>
             <div className="actions--bar">
             <div className="wrap">
                 {
                     authUser ?
-                    this.CourseOptions(authUser, user.id, data.id)
+                    this.CourseOptions(data.id)
                     :
                     <a className="button button-secondary" href="/">Return to List</a>  
                 } 

@@ -26,6 +26,7 @@ export default class Data{
         }
         return fetch(url, options);
       }
+
     //GET protected routes
     async getUser(emailAddress, password){
         
@@ -58,7 +59,7 @@ export default class Data{
     }
 
     // unprotected route that gets all the courses 
-    async getCourses(){
+    async getCourses() {
         const response = await this.api(`/courses`, 'GET');
         if (response.status === 200) {
             return response.json().then(data => data);
@@ -98,7 +99,7 @@ export default class Data{
             throw new Error();
         }
     }
-    //updates route 
+    //protected route that updates course
     async updateCourse(emailAddress, password, course){
         const response = await this.api(`/courses/${course.id}`, 'PUT', course, true, {emailAddress, password});
         if (response.status === 204) {
@@ -113,7 +114,7 @@ export default class Data{
             throw new Error();
         }
     }
-    //PUT route requires authentication
+    //Delete route requires authentication
     async deleteCourse(courseId, emailAddress, password){
          const response = await this.api(`/courses/${courseId}`, 'DELETE', null, true, {emailAddress, password});
          if (response.status === 204) {

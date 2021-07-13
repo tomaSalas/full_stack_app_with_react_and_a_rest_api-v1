@@ -10,6 +10,20 @@ export default class Courses extends Component{
     componentDidMount(){
         this.courses();
     }
+
+    
+    courses = () => {
+        // use the prop in context to get to data where the courses api is
+        this.props.context.data.getCourses()
+        .then((data) => {
+            this.setState({courses: data})  
+        })
+        .catch(err =>
+            {
+                console.log(err);
+            }
+            );
+    }
     // mapping all elments in the array, finally last element add the course create
     render() {
 
@@ -32,18 +46,5 @@ export default class Courses extends Component{
                 </a>
             </div>
         )
-    }
-
-    courses = () => {
-        // use the prop in context to get to data where the courses api is
-        this.props.context.data.getCourses()
-        .then((data) => {
-            this.setState({courses: data})  
-        })
-        .catch(err =>
-            {
-                console.log(err);
-            }
-            );
     }
 }

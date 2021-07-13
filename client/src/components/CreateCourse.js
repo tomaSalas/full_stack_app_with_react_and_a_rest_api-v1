@@ -10,6 +10,57 @@ export default class CreateCourse extends Component {
         materialsNeeded: '',
         errors: []
     }
+
+    //below adapted for previous Treehouse project
+    change = (event) => {
+        //keeps track of all changes to data entered into the form
+        const name = event.target.name;
+        const value = event.target.value;
+    
+        this.setState(() => {
+          return {
+            [name]: value
+          };
+        });
+      }
+
+    submit = () => {
+        //access context and authenticated user information
+        const {context} = this.props;
+        const authUser = context.authenticatedUser;
+        const {
+            title,
+            description,
+            estimatedTime,
+            materialsNeeded
+        } = this.state;
+        const course = {title, description, estimatedTime, materialsNeeded, userId: authUser.id};
+        console.log(course);
+       
+        context.data.createCourse(authUser.emailAddress, authUser.password, course)
+        .then((errors)=>{
+            //if there are errors from creating the user send errors to state
+                //no errors mean user was created successfully
+                if(errors.length){
+                    this.setState({errors});
+                }
+                else {
+                    console.log(`Course created!`);
+                    this.props.history.push('/');
+                }
+
+        })
+        .catch( () => {
+            // if promeses gets rejected
+            // go to the error page
+            this.props.history.push('/error'); // push to history stack
+        });
+       
+    }
+    
+    cancel = () => {
+        this.props.history.push('/');
+    }
     
     render()
    { 
@@ -64,54 +115,6 @@ export default class CreateCourse extends Component {
         )
     }
 
-    //below adapted for previous Treehouse project
-    change = (event) => {
-        //keeps track of all changes to data entered into the form
-        const name = event.target.name;
-        const value = event.target.value;
     
-        this.setState(() => {
-          return {
-            [name]: value
-          };
-        });
-      }
-
-    submit = () => {
-        //access context and authenticated user information
-        const {context} = this.props;
-        const authUser = context.authenticatedUser;
-        const {
-            title,
-            description,
-            estimatedTime,
-            materialsNeeded
-        } = this.state;
-        const course = {title, description, estimatedTime, materialsNeeded, userId: authUser.id};
-       
-        context.data.createCourse(authUser.emailAddress, authUser.password, course)
-        .then((errors)=>{
-            //if there are errors from creating the user send errors to state
-                //no errors mean user was created successfully
-                if(errors.length){
-                    this.setState({errors});
-                }
-                else{
-                    console.log(`Course created!`);
-                    this.props.history.push('/');
-                }
-
-        })
-        .catch( () => {
-            //handle rejected promises
-            //navigate to the error route using the history object
-            this.props.history.push('/error'); // push to history stack
-        });
-       
-    }
-    
-    cancel = () => {
-        this.props.history.push('/');
-    }
 }
 
