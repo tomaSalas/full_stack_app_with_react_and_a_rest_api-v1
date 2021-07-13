@@ -39,8 +39,7 @@ export default class CreateCourse extends Component {
        
         context.data.createCourse(authUser.emailAddress, authUser.password, course)
         .then((errors)=>{
-            //if there are errors from creating the user send errors to state
-                //no errors mean user was created successfully
+            //if there are errors from creating the user send errors to state.
                 if(errors.length){
                     this.setState({errors});
                 }
