@@ -45,7 +45,7 @@ delete = () => {
    if ( window.confirm("Are you sure you want to delete this course?" ))
    {
        //verify user can delete data
-       const {context} = this.props;
+       const { context } = this.props;
        const authUser = context.authenticatedUser;
        const id = this.props.match.params.id;
         if ( authUser ) {
