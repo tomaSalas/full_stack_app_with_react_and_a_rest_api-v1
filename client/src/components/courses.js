@@ -11,7 +11,6 @@ export default class Courses extends Component{
         this.courses();
     }
 
-    
     courses = () => {
         // use the prop in context to get to data where the courses api is
         this.props.context.data.getCourses()

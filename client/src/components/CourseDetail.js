@@ -47,6 +47,7 @@ delete = () => {
        //verify user can delete data
        const { context } = this.props;
        const authUser = context.authenticatedUser;
+       const pass = context.password;
        const id = this.props.match.params.id;
         if ( authUser ) {
             context.data.deleteCourse(id, authUser.emailAddress, authUser.password)

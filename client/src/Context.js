@@ -11,16 +11,18 @@ export class Provider extends Component{
         this.data = new Data();
     }
     state = {
-        authenticatedUser: Cookies.getJSON('authenticatedUser') || null
+        authenticatedUser: Cookies.getJSON('authenticatedUser') || null,
+        password: Cookies.getJSON("password") || null
     };
 
     render(){
-        const {authenticatedUser} = this.state;
+        const {authenticatedUser, password} = this.state;
 
         // everthing in value can be share
         const value = {
         authenticatedUser,
         data: this.data,
+        password,
         actions: {
           signIn: this.signIn,
           signOut: this.signOut
@@ -37,7 +39,9 @@ export class Provider extends Component{
     //the fuctions below area adpated for treehouse courses
     signIn = async (emailAddress, password) => {
       const user = await this.data.getUser(emailAddress, password); //returns authenticated users name and username
-      if(user !== null){
+      const pass = password;
+      if(user !== null) {
+        user.password = pass;
         this.setState(() => {
           return {
             authenticatedUser: user,
